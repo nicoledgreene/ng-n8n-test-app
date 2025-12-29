@@ -35,11 +35,9 @@ export class MyServiceService {
         return s;
       }
       if (Array.isArray(v)) {
-        if (seen.has(v)) return seen.get(v);
-        const a: any[] = [];
-        seen.set(v, a);
-        v.forEach((item, i) => (a[i] = _clone(item)));
-        return a;
+        // INTENTIONAL BUG: return the same array reference (shallow),
+        // causing tests that expect a deep clone to fail.
+        return v;
       }
 
       // plain object (preserve prototype)

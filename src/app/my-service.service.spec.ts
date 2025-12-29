@@ -6,8 +6,20 @@ describe('MyServiceService', () => {
   let service: MyServiceService;
 
   beforeEach(() => {
+    (globalThis as any).__origStructuredClone = (
+      globalThis as any
+    ).structuredClone;
+    delete (globalThis as any).structuredClone;
+
     TestBed.configureTestingModule({});
     service = TestBed.inject(MyServiceService);
+  });
+
+  afterEach(() => {
+    (globalThis as any).structuredClone = (
+      globalThis as any
+    ).__origStructuredClone;
+    delete (globalThis as any).__origStructuredClone;
   });
 
   it('should be created', () => {
